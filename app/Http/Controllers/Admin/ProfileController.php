@@ -74,4 +74,11 @@ class ProfileController extends Controller
         
         return view('admin.profile.index', ['posts' => $posts, 'cond_title' => '']);
     }
+    
+    public function delete(Request $request)
+    {
+      $profile = Profile::find($request->id);
+      $profile->delete();
+      return redirect('admin/profile/');
+    }
 }
