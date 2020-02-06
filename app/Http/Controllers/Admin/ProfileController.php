@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Profile;
+use App\History2;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -64,6 +66,12 @@ class ProfileController extends Controller
         
         $profile->fill($profile_form)->save();
         $posts = Profile::all();
+        
+        $history2 = new History2;
+        $history2->profile_id = $profile->id;
+        $history2->edited_at = Carbon::now();
+        $history2->save();
+        
         return view('admin.profile.index', ['posts' => $posts, 'cond_title' => '']);
     }
 }
